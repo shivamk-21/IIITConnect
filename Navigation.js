@@ -4,6 +4,8 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import HomePage from "./src/pages/HomePage/HomePage";
 import AccountsPage from "./src/pages/AccountsPage/AccountsPage";
+import AttendancePage from "./src/pages/AttendancePage/AttendancePage";
+import ComingSoon from "./src/pages/ComingSoon";
 import { useConText } from "./src/context/Context";
 const Tab = createBottomTabNavigator();
 
@@ -64,9 +66,9 @@ const Navigation = () => {
         style={{ flex: 1, backgroundColor: "#1F2B32" }}
       >
         <Tab.Screen name="Home" component={HomePage} />
-        <Tab.Screen name="Attendance" component={AccountsPage} />
-        <Tab.Screen name="QBank" component={AccountsPage} />
-        <Tab.Screen name="Directory" component={AccountsPage} />
+        <Tab.Screen name="Attendance" component={AttendancePage} />
+        <Tab.Screen name="QBank" component={ComingSoon} />
+        <Tab.Screen name="Directory" component={ComingSoon} />
       </Tab.Navigator>
     </NavigationContainer>
   );

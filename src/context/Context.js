@@ -4,6 +4,7 @@ import axios from "axios";
 const CentralData = createContext();
 
 const Provider = ({ children }) => {
+  const [subject, setSubject] = useState([]);
   const [quoteData, setQuoteData] = useState({
     quote: "Strive to Learn Not Learn to Strive",
     author: "Annonymous",
@@ -45,8 +46,80 @@ const Provider = ({ children }) => {
   useEffect(() => {
     fetchQuoteOnceADay();
   }, []);
+  useEffect(() => {
+    loadSubjectData();
+  }, []);
 
-  valuesToShare = { quoteData, loading, tabBarVisible, toggleTabBar };
+  useEffect(() => {
+    saveSubjectData();
+  }, [subject]);
+
+  const loadSubjectData = async () => {
+    try {
+      const savedSubject = await AsyncStorage.getItem("subject");
+      if (savedSubject) {
+        setSubject(JSON.parse(savedSubject));
+      }
+    } catch (error) {}
+  };
+
+  const saveSubjectData = async () => {
+    try {
+      await AsyncStorage.setItem("subject", JSON.stringify(subject));
+    } catch (error) {}
+  };
+
+  const addSubject = (name, credits) => {
+    setSubject([...subject, { name, credits, present: 0, absent: 0 }]);
+  };
+
+  const removeSubject = (name) => {
+    const updatedSubjects = subject.filter((s) => s.name !== name);
+    setSubject(updatedSubjects);
+  };
+
+  const addPresent = (name) => {
+    const updatedSubjects = subject.map((s) => {
+      if (s.name === name) {
+        return { ...s, present: s.present + 1 };
+      }
+      return s;
+    });
+    setSubject(updatedSubjects);
+  };
+
+  const addAbsent = (name) => {
+    const updatedSubjects = subject.map((s) => {
+      if (s.name === name) {
+        return { ...s, absent: s.absent + 1 };
+      }
+      return s;
+    });
+    setSubject(updatedSubjects);
+  };
+
+  const updateSubject = (name, newAbsent, newPresent) => {
+    const updatedSubjects = subject.map((s) => {
+      if (s.name === name) {
+        return { ...s, absent: newAbsent, present: newPresent };
+      }
+      return s;
+    });
+    setSubject(updatedSubjects);
+  };
+
+  valuesToShare = {
+    quoteData,
+    loading,
+    tabBarVisible,
+    toggleTabBar,
+    subject,
+    addSubject,
+    removeSubject,
+    addPresent,
+    addAbsent,
+    updateSubject,
+  };
   return (
     <CentralData.Provider value={valuesToShare}>
       {children}
