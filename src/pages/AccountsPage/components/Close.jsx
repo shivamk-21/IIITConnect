@@ -20,7 +20,7 @@ const Logout = ({ close }) => {
             lineHeight: 50,
           }}
         >
-          CLose
+          Close
         </Text>
       </LinearGradient>
     </TouchableOpacity>
