@@ -70,7 +70,7 @@ const Provider = ({ children }) => {
   };
 
   const addSubject = (name, credits) => {
-    setSubject([...subject, { name, credits, present: 0, absent: 0 }]);
+    setSubject([...subject, { name, credits, present: 0, absent: 0 ,presentDates:[],absentDates:[]}]);
   };
 
   const removeSubject = (name) => {
@@ -79,19 +79,21 @@ const Provider = ({ children }) => {
   };
 
   const addPresent = (name) => {
+    const currentDate = new Date();
     const updatedSubjects = subject.map((s) => {
       if (s.name === name) {
-        return { ...s, present: s.present + 1 };
+        return { ...s, present: s.present + 1, presentDates: [...s.presentDates, currentDate] };
       }
       return s;
     });
     setSubject(updatedSubjects);
   };
-
+  
   const addAbsent = (name) => {
+    const currentDate = new Date();
     const updatedSubjects = subject.map((s) => {
       if (s.name === name) {
-        return { ...s, absent: s.absent + 1 };
+        return { ...s, absent: s.absent + 1 ,absentDates: [...s.absentDates, currentDate] };
       }
       return s;
     });

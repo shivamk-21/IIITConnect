@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
     width: "10%",
   },
   SubjectList: {
-    height: "94%",
+    height: "92%",
     width: "100%",
     paddingTop: "3%",
   },
@@ -154,12 +154,13 @@ const styles = StyleSheet.create({
     backgroundColor: "red",
     width: "95%",
     height: 100,
-    top: "-1.5%",
+    top: -45,
     left: "2.5%",
     borderBottomLeftRadius: 20,
     borderBottomRightRadius: 20,
     zIndex: -1,
     marginBottom: "-10%",
+    position:"relative"
   },
   actionButton: {
     width: "45%",
