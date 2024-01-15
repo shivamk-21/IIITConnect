@@ -1,11 +1,14 @@
 import { Text, View, ScrollView } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import styles from "../styles/Theme";
 import SubjectCard from "../components/SubjectCard";
+import SubjectInfo from "../components/SubjectInfo";
 import { useConText } from "../../../context/Context";
 
 const SubjectList = () => {
-  const { subject } = useConText();
+  const { subject, toggleTabBar } = useConText();
+  const [popupShown, setPopupShown] = useState(false);
+  const [popUpData, setPopUpData] = useState({});
   const colours = [
     {
       Primary: "#9007FB",
@@ -32,21 +35,30 @@ const SubjectList = () => {
       SliderSecondary: "#CDD9EF",
     },
   ];
-
+  const handlePopUp = ({ name, colours }) => {
+    setPopupShown(!popupShown);
+    const s = subject.find((item) => item.name === name);
+    setPopUpData({ subjectData: s, colours: colours });
+    toggleTabBar();
+  };
   return (
-    <View style={styles.SubjectList}>
-      <ScrollView >
-        {subject.map((subjectItem, index) => {
-          return (
-            <SubjectCard
-              key={index}
-              subjectData={subjectItem}
-              colorData={colours[index % 4]}
-            />
-          );
-        })}
-      </ScrollView>
-    </View>
+    <>
+      <View style={styles.SubjectList}>
+        <ScrollView>
+          {subject.map((subjectItem, index) => {
+            return (
+              <SubjectCard
+                key={index}
+                subjectData={subjectItem}
+                colorData={colours[index % 4]}
+                handlePopUp={handlePopUp}
+              />
+            );
+          })}
+        </ScrollView>
+      </View>
+      {popupShown && <SubjectInfo data={popUpData} />}
+    </>
   );
 };
 

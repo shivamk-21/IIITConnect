@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import styles from "../styles/Theme";
 import { useConText } from "../../../context/Context";
-const SubjectCard = ({ subjectData, colorData }) => {
+const SubjectCard = ({ subjectData, colorData,handlePopUp }) => {
   const { absent, present } = subjectData;
   const total = absent + present;
   const percent = total ? ((present / total) * 100).toFixed(0) : 0;
@@ -36,7 +36,7 @@ const SubjectCard = ({ subjectData, colorData }) => {
   };
   return (
     <>
-      <TouchableOpacity style={styles.AttendanceCardBase} onPress={handlepress}>
+      <TouchableOpacity style={styles.AttendanceCardBase} onPress={handlepress} onLongPress={()=>{handlePopUp(subjectData,colorData)}}>
         <LinearGradient
           colors={[colorData.Primary, colorData.Secondary]}
           start={{ x: 0, y: 1 }}

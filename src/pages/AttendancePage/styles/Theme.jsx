@@ -176,5 +176,15 @@ const styles = StyleSheet.create({
     color: "#ffffff",
     top: "-20%",
   },
+  SubjectInfo:{
+    width: "100%",
+    height: "60%",
+    position: "absolute",
+    bottom:0,
+    backgroundColor: "#414B51",
+    zIndex: 1,
+    borderTopLeftRadius: 50,
+    borderTopRightRadius: 50,
+  }
 });
 export default styles;
