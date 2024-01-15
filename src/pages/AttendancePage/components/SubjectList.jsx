@@ -48,6 +48,7 @@ const SubjectList = () => {
   const handleRemove = (name) => {
     removeSubject(name);
     setPopupShown(!popupShown);
+    toggleTabBar();
   };
   return (
     <>
