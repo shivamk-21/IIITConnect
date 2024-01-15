@@ -4,9 +4,10 @@ import styles from "../styles/Theme";
 import SubjectCard from "../components/SubjectCard";
 import SubjectInfo from "../components/SubjectInfo";
 import { useConText } from "../../../context/Context";
+import { PreventRemoveProvider } from "@react-navigation/core";
 
 const SubjectList = () => {
-  const { subject, toggleTabBar } = useConText();
+  const { subject, toggleTabBar, removeSubject } = useConText();
   const [popupShown, setPopupShown] = useState(false);
   const [popUpData, setPopUpData] = useState({});
   const colours = [
@@ -35,15 +36,18 @@ const SubjectList = () => {
       SliderSecondary: "#CDD9EF",
     },
   ];
-  const handlePopUp = (name, c) => {
-    const s = subject.find((item) => item.name === name);
-    setPopUpData({ subjectData: s, color: c });
+  const handlePopUp = async (data, c) => {
+    setPopUpData({ subjectData: data, color: c });
     toggleTabBar();
     setPopupShown(!popupShown);
   };
   const handlePopUpClose = () => {
     setPopupShown(!popupShown);
     toggleTabBar();
+  };
+  const handleRemove = (name) => {
+    removeSubject(name);
+    setPopupShown(!popupShown);
   };
   return (
     <>
@@ -63,7 +67,11 @@ const SubjectList = () => {
         </ScrollView>
       </View>
       {popupShown && (
-        <SubjectInfo data={popUpData} handleClose={handlePopUpClose} />
+        <SubjectInfo
+          data={popUpData}
+          handleClose={handlePopUpClose}
+          handleremove={handleRemove}
+        />
       )}
     </>
   );

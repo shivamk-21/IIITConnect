@@ -160,7 +160,7 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 20,
     zIndex: -1,
     marginBottom: "-10%",
-    position:"relative"
+    position: "relative",
   },
   actionButton: {
     width: "45%",
@@ -177,26 +177,25 @@ const styles = StyleSheet.create({
     color: "#ffffff",
     top: "-20%",
   },
-  SubjectInfo:{
+  SubjectInfo: {
     width: "100%",
     height: "75%",
     position: "absolute",
-    bottom:"-10%",
+    bottom: "-10%",
     backgroundColor: "#414B51",
     zIndex: 1,
     borderTopLeftRadius: 50,
     borderTopRightRadius: 50,
   },
-  subjectInfoClose:{
-    position:"absolute",
-    height:"12%",
-    backgroundColor:"red",
-    width:"90%",
-    left:"10%",
-    borderRadius:100,
-    bottom:"7%",
-    alignItems:"center",
-    justifyContent:"center",
-  }
+  subjectInfoClose: {
+    position: "absolute",
+    height: "12%",
+    backgroundColor: "red",
+    width: "52%",
+    borderRadius: 100,
+    bottom: "7%",
+    alignItems: "center",
+    justifyContent: "center",
+  },
 });
 export default styles;
