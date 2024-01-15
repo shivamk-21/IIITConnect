@@ -35,10 +35,14 @@ const SubjectList = () => {
       SliderSecondary: "#CDD9EF",
     },
   ];
-  const handlePopUp = ({ name, colours }) => {
-    setPopupShown(!popupShown);
+  const handlePopUp = (name, c) => {
     const s = subject.find((item) => item.name === name);
-    setPopUpData({ subjectData: s, colours: colours });
+    setPopUpData({ subjectData: s, color: c });
+    toggleTabBar();
+    setPopupShown(!popupShown);
+  };
+  const handlePopUpClose = () => {
+    setPopupShown(!popupShown);
     toggleTabBar();
   };
   return (
@@ -51,14 +55,16 @@ const SubjectList = () => {
                 key={index}
                 subjectData={subjectItem}
                 colorData={colours[index % 4]}
-                handlePopUp={handlePopUp}
+                handlePopUp={() => handlePopUp(subjectItem, colours[index % 4])}
               />
             );
           })}
           <View style={{ width: "100%", height: 150 }} />
         </ScrollView>
       </View>
-      {popupShown && <SubjectInfo data={popUpData} />}
+      {popupShown && (
+        <SubjectInfo data={popUpData} handleClose={handlePopUpClose} />
+      )}
     </>
   );
 };

@@ -36,7 +36,7 @@ const SubjectCard = ({ subjectData, colorData,handlePopUp }) => {
   };
   return (
     <>
-      <TouchableOpacity style={styles.AttendanceCardBase} onPress={handlepress} onLongPress={()=>{handlePopUp(subjectData,colorData)}}>
+      <TouchableOpacity style={styles.AttendanceCardBase} onPress={handlepress} onLongPress={handlePopUp}>
         <LinearGradient
           colors={[colorData.Primary, colorData.Secondary]}
           start={{ x: 0, y: 1 }}
