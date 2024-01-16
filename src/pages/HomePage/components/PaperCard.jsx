@@ -1,7 +1,8 @@
-import { View, Text, Image } from "react-native";
+import { Text } from "react-native";
 import React from "react";
 import styles from "../styles/GlobalLight";
 import { LinearGradient } from "expo-linear-gradient";
+
 const PaperCard = () => {
   return (
     <LinearGradient

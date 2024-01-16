@@ -7,26 +7,27 @@ const SubjectInfo = ({ data, handleClose, handleremove }) => {
   const expAb = Math.round(
     (data.subjectData.credits * 7) / 4 - data.subjectData.absent
   );
+
   const percentage = Math.round(
     (data.subjectData.present /
       (data.subjectData.absent + data.subjectData.present)) *
       100
   );
+
   const [fontSize, setFontSize] = useState(25);
+
   useEffect(() => {
     const { width: containerWidth } = Dimensions.get("window");
     const maxWidth = 0.7 * containerWidth;
-
     let currentFontSize = 30;
     let textWidth = currentFontSize * data.subjectData.name.length * 0.6;
-
     while (textWidth > maxWidth) {
       currentFontSize -= 1;
       textWidth = currentFontSize * data.subjectData.name.length * 0.6;
     }
-
     setFontSize(currentFontSize);
   }, []);
+  
   return (
     <View style={styles.SubjectInfo}>
       <LinearGradient

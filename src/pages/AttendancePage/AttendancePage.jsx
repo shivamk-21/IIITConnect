@@ -7,6 +7,7 @@ import { useConText } from "../../context/Context";
 
 const AttendancePage = () => {
   const [isAddSubjectVisible, setIsAddSubjectVisible] = useState(false);
+  
   const { toggleTabBar } = useConText();
   const handleAddSubject = () => {
     setIsAddSubjectVisible(!isAddSubjectVisible);

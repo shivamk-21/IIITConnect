@@ -2,6 +2,7 @@ import { View, Text, Image } from "react-native";
 import React from "react";
 import styles from "../styles/GlobalLight";
 import { LinearGradient } from "expo-linear-gradient";
+
 const UserStatCard = () => {
   return (
     <View style={styles.userStatCardBase}>

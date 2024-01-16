@@ -1,10 +1,12 @@
-import { View, Text, Image, useColorScheme } from "react-native";
+import { View, Text } from "react-native";
 import React from "react";
 import styles from "../styles/GlobalLight";
 import { LinearGradient } from "expo-linear-gradient";
 import { useConText } from "../../../context/Context";
+
 const AttendanceCard = () => {
   const { subject } = useConText();
+
   let totalPresent = 0;
   let totalAbsent = 0;
   subject.forEach((s) => {

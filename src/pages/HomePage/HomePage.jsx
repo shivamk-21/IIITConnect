@@ -16,11 +16,11 @@ const MainPage = () => {
   const { toggleTabBar } = useConText();
 
   const handleAttendancePress = () => {
-    navigation.navigate("Attendance"); // Navigate to the 'Attendance' page
+    navigation.navigate("Attendance"); 
   };
 
   const handlePaperPress = () => {
-    navigation.navigate("QBank"); // Navigate to the 'Paper' page
+    navigation.navigate("QBank"); 
   };
 
   const handleUserClick = () => {

@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
     width: "10%",
   },
   SubjectList: {
-    height: "92%",
+    height: "95%",
     width: "100%",
     paddingTop: "3%",
   },
