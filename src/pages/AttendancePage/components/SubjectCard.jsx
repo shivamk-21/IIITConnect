@@ -12,7 +12,7 @@ const SubjectCard = ({ subjectData, colorData,handlePopUp }) => {
   const { addPresent, addAbsent } = useConText();
   useEffect(() => {
     const { width: containerWidth } = Dimensions.get("window");
-    const maxWidth = 0.8 * containerWidth;
+    const maxWidth = 0.70 * containerWidth;
 
     let currentFontSize = 30;
     let textWidth = currentFontSize * subjectData.name.length * 0.6;
