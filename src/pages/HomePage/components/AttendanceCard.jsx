@@ -29,7 +29,7 @@ const AttendanceCard = () => {
       <Text style={styles.attendanceCardText2}>{overallPercentage}%</Text>
       <View style={styles.attendanceCardBarBase}></View>
       <View
-        style={{ ...styles.attendanceCardBar, width: `${overallPercentage}%` }}
+        style={{ ...styles.attendanceCardBar, width: `${overallPercentage*0.9}%` }}
       ></View>
     </LinearGradient>
   );

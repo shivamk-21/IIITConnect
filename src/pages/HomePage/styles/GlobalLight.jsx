@@ -132,7 +132,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#AC4AC5",
   },
   attendanceCardBar: {
-    width: "100%",
     height: "15%",
     position: "absolute",
     top: "70%",

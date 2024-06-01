@@ -1,7 +1,8 @@
-import { Text, View, TouchableOpacity, Dimensions } from "react-native";
+import { Text, View, TouchableOpacity, Dimensions, Alert } from "react-native";
 import React, { useState, useEffect } from "react";
 import styles from "../styles/Theme";
 import { LinearGradient } from "expo-linear-gradient";
+import Calendar from "./Calendar";
 
 const SubjectInfo = ({ data, handleClose, handleremove }) => {
   const expAb = Math.round(
@@ -27,7 +28,23 @@ const SubjectInfo = ({ data, handleClose, handleremove }) => {
     }
     setFontSize(currentFontSize);
   }, []);
-  
+
+  const confirmRemove = () => {
+    Alert.alert(
+      "Confirmation",
+      `Are you sure you want to remove ${data.subjectData.name}?`,
+      [
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel",
+        },
+        { text: "Remove", onPress: () => handleremove(data.subjectData.name) },
+      ],
+      { cancelable: false }
+    );
+  };
+
   return (
     <View style={styles.SubjectInfo}>
       <LinearGradient
@@ -43,7 +60,9 @@ const SubjectInfo = ({ data, handleClose, handleremove }) => {
         <View style={styles.hr} />
         <View style={styles.infoSubbar}>
           <Text style={styles.text}>Present : {data.subjectData.present}</Text>
+          <Text style={styles.text}>/</Text>
           <Text style={styles.text}>Absent : {data.subjectData.absent}</Text>
+          <Text style={styles.text}>/</Text>
           <Text style={styles.text}>Credits : {data.subjectData.credits}</Text>
         </View>
         <Text style={styles.exPtext}>Expected Absents Left : {expAb}</Text>
@@ -62,13 +81,15 @@ const SubjectInfo = ({ data, handleClose, handleremove }) => {
             }}
           />
         </View>
+        <Calendar data={data} />
+
         <TouchableOpacity
           style={{
             ...styles.subjectInfoClose,
             backgroundColor: data.color.SliderSecondary,
             left: "2.5%",
           }}
-          onPress={() => handleremove(data.subjectData.name)}
+          onPress={confirmRemove}
         >
           <Text
             style={{
