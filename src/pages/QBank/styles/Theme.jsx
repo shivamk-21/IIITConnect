@@ -229,9 +229,12 @@ const styles = StyleSheet.create({
     fontFamily: "Pacifico_400Regular",
   },
   loadingScreen: {
-    height: "100%",
+    height: "300%",
     width: "100%",
-    backgroundColor:"#1F2B32"
+    backgroundColor: "rgba(31, 43, 50, 0.7)",
+    zIndex: 1,
+    top: "-150%",
+    justifyContent: "center",
   },
 });
 export default styles;
