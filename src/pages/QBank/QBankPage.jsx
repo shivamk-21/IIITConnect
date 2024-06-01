@@ -9,16 +9,29 @@ import {
 import React, { useState } from "react";
 import styles from "./styles/Theme";
 import PaperList from "./components/PaperList";
+import { useConText } from "../../context/Context";
+import PopUp from "./components/PopUp";
 
 const QBankPage = () => {
   const [subjectName, setSubjectName] = useState("");
   const [subjectCode, setSubjectCode] = useState("");
   const [fetchedData, setFetchedData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [isShown, setIsShown] = useState(false);
+  const { toggleTabBar } = useConText();
 
+  const handlePress = () => {
+    toggleTabBar();
+    setIsShown(true);
+  };
+
+  const handleClose = () => {
+    toggleTabBar();
+    setIsShown(false);
+  };
   const handleFetch = async () => {
     setIsLoading(true);
-    if (subjectCode === "" || subjectCode === "") {
+    if (subjectName === "" && subjectCode === "") {
       setFetchedData([]);
       setIsLoading(false);
     } else {
@@ -27,7 +40,7 @@ const QBankPage = () => {
         url.searchParams.append("subjectName", subjectName);
         url.searchParams.append("subjectCode", subjectCode);
 
-        setSubjectCode("");
+        setSubjectName("");
         setSubjectCode("");
 
         const response = await fetch(url);
@@ -48,6 +61,12 @@ const QBankPage = () => {
 
   return (
     <View style={{ flex: 1, backgroundColor: "#1F2B32" }}>
+      <TouchableOpacity style={styles.contribute} onPress={handlePress}>
+        <Text style={styles.contributeText}>Contribute</Text>
+      </TouchableOpacity>
+
+      {isShown && <PopUp handleClose={handleClose} />}
+
       {isLoading && (
         <View style={styles.loadingOverlay}>
           <ActivityIndicator size="large" color="#FFFFFF" />
