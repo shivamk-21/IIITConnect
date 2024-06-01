@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
 import styles from "../styles/Theme";
+import { useConText } from "../../../context/Context";
 
 const DateCard = ({ data }) => {
-  const { dateT, absentCount, presentCount } = data;
+  const { dateT, absentCount, presentCount, subject } = data;
   const [addButtonTextColor, setAddButtonTextColor] = useState("grey");
   const [removeButtonTextColor, setRemoveButtonTextColor] = useState("grey");
+  const { addAbsentDate, addPresentDate } = useConText();
 
   useEffect(() => {
     setAddButtonTextColor(presentCount > 0 ? "green" : "grey");
@@ -18,17 +20,13 @@ const DateCard = ({ data }) => {
 
   return (
     <View style={styles.dateCard}>
-      <TouchableOpacity style={styles.dateCardButton}>
-        <Text style={{ ...styles.dateCardText, color: removeButtonTextColor }}>
-          - {absentCount}
-        </Text>
-      </TouchableOpacity>
+      <Text style={{ ...styles.dateCardText, color: removeButtonTextColor }}>
+        - {absentCount}
+      </Text>
       <Text style={styles.dateCardDate}>{formattedDate}</Text>
-      <TouchableOpacity style={styles.dateCardButton}>
-        <Text style={{ ...styles.dateCardText, color: addButtonTextColor }}>
-          + {presentCount}
-        </Text>
-      </TouchableOpacity>
+      <Text style={{ ...styles.dateCardText, color: addButtonTextColor }}>
+        + {presentCount}
+      </Text>
     </View>
   );
 };

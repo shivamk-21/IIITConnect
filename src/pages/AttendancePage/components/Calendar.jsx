@@ -10,18 +10,6 @@ const Calendar = ({ data }) => {
   useEffect(() => {
     const tempDatesMap = new Map();
 
-    const today = new Date().toLocaleDateString();
-    if (
-      !data.subjectData.absentDates.includes(today) &&
-      !data.subjectData.presentDates.includes(today)
-    ) {
-      tempDatesMap.set(today, {
-        date: today,
-        absentCount: 0,
-        presentCount: 0,
-      });
-    }
-
     // Iterate over absent dates
     data.subjectData.absentDates.forEach((date) => {
       if (!tempDatesMap.has(date)) {
@@ -46,11 +34,15 @@ const Calendar = ({ data }) => {
       tempDatesMap.get(date).presentCount++;
     });
 
-    // Check if today's date is in the map
+    // Sort dates by ascending order of date
+    const sortedDates = Array.from(tempDatesMap.values()).sort((a, b) => new Date(a.date) - new Date(b.date));
 
-    setAllDatesMap(tempDatesMap);
+    setAllDatesMap(sortedDates.reduce((map, obj) => {
+      map.set(obj.date, obj);
+      return map;
+    }, new Map()));
 
-    const visibleDatesArray = Array.from(tempDatesMap.values()).slice(-10);
+    const visibleDatesArray = sortedDates.slice(-10);
     setVisibleDates(visibleDatesArray);
   }, [data]);
 
@@ -92,6 +84,7 @@ const Calendar = ({ data }) => {
               dateT: dateObj.date,
               absentCount: dateObj.absentCount,
               presentCount: dateObj.presentCount,
+              subject: data.subjectData.name,
             }}
             key={index}
           />

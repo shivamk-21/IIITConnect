@@ -335,5 +335,14 @@ const styles = StyleSheet.create({
     height: "20%",
     alignItems: "center",
   },
+  editModal: {
+    width: "11%",
+    height: "8%",
+    position: "absolute",
+    top: "32%",
+    right: "18.5%",
+    borderRadius: 100,
+    alignItems: "center",
+  },
 });
 export default styles;

@@ -139,6 +139,33 @@ const Provider = ({ children }) => {
     setSubject(updatedSubjects);
   };
 
+  const addPresentDate = (name, date) => {
+    const updatedSubjects = subject.map((s) => {
+      if (s.name === name) {
+        return {
+          ...s,
+          present: s.present + 1,
+          presentDates: [...s.presentDates, date],
+        };
+      }
+      return s;
+    });
+    setSubject(updatedSubjects);
+  };
+  const addAbsentDate = (name, date) => {
+    const updatedSubjects = subject.map((s) => {
+      if (s.name === name) {
+        return {
+          ...s,
+          absent: s.absent + 1,
+          absentDates: [...s.absentDates, date],
+        };
+      }
+      return s;
+    });
+    setSubject(updatedSubjects);
+  };
+
   const updateSubject = (name, newAbsent, newPresent) => {
     const updatedSubjects = subject.map((s) => {
       if (s.name === name) {
@@ -160,6 +187,8 @@ const Provider = ({ children }) => {
     addPresent,
     addAbsent,
     updateSubject,
+    addAbsentDate,
+    addPresentDate,
   };
   return (
     <CentralData.Provider value={valuesToShare}>

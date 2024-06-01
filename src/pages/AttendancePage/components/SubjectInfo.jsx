@@ -1,8 +1,16 @@
-import { Text, View, TouchableOpacity, Dimensions, Alert } from "react-native";
+import {
+  Text,
+  View,
+  TouchableOpacity,
+  Dimensions,
+  Alert,
+  Modal,
+} from "react-native";
 import React, { useState, useEffect } from "react";
 import styles from "../styles/Theme";
 import { LinearGradient } from "expo-linear-gradient";
 import Calendar from "./Calendar";
+import EditModal from "./EditModal";
 
 const SubjectInfo = ({ data, handleClose, handleremove }) => {
   const expAb = Math.round(
@@ -16,6 +24,7 @@ const SubjectInfo = ({ data, handleClose, handleremove }) => {
   );
 
   const [fontSize, setFontSize] = useState(25);
+  const [modalVisible, setModalVisible] = useState(false);
 
   useEffect(() => {
     const { width: containerWidth } = Dimensions.get("window");
@@ -98,7 +107,7 @@ const SubjectInfo = ({ data, handleClose, handleremove }) => {
               fontFamily: "Pacifico_400Regular",
             }}
           >
-            Remove
+            Remove Subject
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
@@ -119,6 +128,32 @@ const SubjectInfo = ({ data, handleClose, handleremove }) => {
             Close
           </Text>
         </TouchableOpacity>
+        <TouchableOpacity
+          style={{
+            ...styles.editModal,
+            backgroundColor: data.color.SliderSecondary,
+          }}
+          onPress={() => setModalVisible(true)}
+        >
+          <Text
+            style={{
+              fontSize: 25,
+              color: data.color.SliderPrimary,
+            }}
+          >
+            &#x270D;
+          </Text>
+        </TouchableOpacity>
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={() => {
+            setModalVisible(!modalVisible);
+          }}
+        >
+          <EditModal data={data} closeModal={() => setModalVisible(false)} />
+        </Modal>
       </LinearGradient>
     </View>
   );
