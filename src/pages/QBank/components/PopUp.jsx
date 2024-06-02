@@ -12,6 +12,8 @@ import styles from "../styles/Theme";
 import { Dropdown } from "react-native-element-dropdown";
 import * as DocumentPicker from "expo-document-picker";
 import axios from "axios";
+import * as FileSystem from "expo-file-system";
+import JSZip from "jszip";
 
 const PopUp = ({ handleClose }) => {
   const [subjectName, setSubjectName] = useState("");
@@ -55,20 +57,43 @@ const PopUp = ({ handleClose }) => {
       );
       return;
     }
-
+    setLoading(true);
     const formData = new FormData();
     formData.append("subjectName", subjectName);
     formData.append("subjectCode", subjectCode);
     formData.append("paper", paper);
     formData.append("semester", semester);
     formData.append("session", session);
-    formData.append("file", {
-      uri: file.assets[0].uri,
-      type: file.assets[0].mimeType,
-      name: file.assets[0].name,
-    });
+    if (file.length === 1) {
+      formData.append("file", {
+        uri: file[0].uri,
+        type: file[0].mimeType,
+        name: file[0].name,
+      });
+    } else {
+      const zip = new JSZip();
 
-    setLoading(true);
+      for (const f of file) {
+        const fileContent = await FileSystem.readAsStringAsync(f.uri, {
+          encoding: FileSystem.EncodingType.Base64,
+        });
+        zip.file(f.name, fileContent, { base64: true });
+      }
+
+      const zipContent = await zip.generateAsync({ type: "base64" });
+
+      const targetPath = `${FileSystem.cacheDirectory}files.zip`;
+      await FileSystem.writeAsStringAsync(targetPath, zipContent, {
+        encoding: FileSystem.EncodingType.Base64,
+      });
+
+      formData.append("file", {
+        uri: targetPath,
+        type: "application/zip",
+        name: "files.zip",
+      });
+    }
+
     try {
       const response = await axios.post(
         "https://iiit-backend.onrender.com/upload",
@@ -95,14 +120,24 @@ const PopUp = ({ handleClose }) => {
   };
 
   const handleFileSelect = async () => {
-    let result = await DocumentPicker.getDocumentAsync({
-      type: ["image/*", "application/pdf"],
-    });
-    if (result.canceled === false) {
-      setFile(result);
-      alert("File selection was selected");
-    } else {
-      alert("File selection was canceled");
+    setLoading(true);
+    try {
+      let result = await DocumentPicker.getDocumentAsync({
+        type: ["image/*", "application/pdf"],
+        multiple: true,
+      });
+
+      if (!result.canceled) {
+        setFile(result.assets);
+        Alert.alert("File selection was successful");
+      } else {
+        Alert.alert("File selection was canceled");
+      }
+    } catch (error) {
+      console.error("Error selecting files: ", error);
+      Alert.alert("An error occurred during file selection");
+    } finally {
+      setLoading(false);
     }
   };
   return (
