@@ -19,9 +19,9 @@ const PopUp = ({ handleClose }) => {
   const [subjectName, setSubjectName] = useState("");
   const [subjectCode, setSubjectCode] = useState("");
 
-  const [paper, setPaper] = useState(null);
-  const [semester, setSemester] = useState("");
-  const [session, setSession] = useState("");
+  const [paper, setPaper] = useState("MT");
+  const [semester, setSemester] = useState("Spring");
+  const [session, setSession] = useState("2023-24");
   const [file, setFile] = useState(null);
 
   const [loading, setLoading] = useState(false);

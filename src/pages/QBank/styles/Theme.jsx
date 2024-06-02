@@ -14,6 +14,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontFamily: "Pacifico_400Regular",
     paddingLeft: "2%",
+    color: "#8C99A0",
   },
   Code: {
     width: "45%",
@@ -24,6 +25,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontFamily: "Pacifico_400Regular",
     paddingLeft: "2%",
+    color: "#8C99A0",
   },
   Button: {
     width: "45%",
@@ -174,7 +176,6 @@ const styles = StyleSheet.create({
     fontFamily: "Pacifico_400Regular",
     fontSize: 20,
     paddingLeft: "7%",
-    color: "#8C99A0",
   },
   close: {
     width: "17%",
