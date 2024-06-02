@@ -8,10 +8,9 @@ import {
 } from "react-native";
 import React, { useState } from "react";
 import styles from "./styles/Theme";
-import PaperList from "./components/PaperList";
+import ContactList from "./components/ContactList";
 import { useConText } from "../../context/Context";
 import { Dropdown } from "react-native-element-dropdown";
-
 const QBankPage = () => {
   const [Name, setName] = useState("");
   const [Number, setNumber] = useState("");
@@ -133,7 +132,7 @@ const QBankPage = () => {
         </TouchableOpacity>
         <View style={styles.hr} />
       </View>
-      {/* {!isLoading && fetchedData.data && <PaperList data={fetchedData.data} />} */}
+      {!isLoading && fetchedData.filteredData && <ContactList data={fetchedData.filteredData} />}
     </View>
   );
 };
