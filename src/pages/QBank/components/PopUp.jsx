@@ -19,9 +19,9 @@ const PopUp = ({ handleClose }) => {
   const [subjectName, setSubjectName] = useState("");
   const [subjectCode, setSubjectCode] = useState("");
 
-  const [paper, setPaper] = useState("MT");
-  const [semester, setSemester] = useState("Spring");
-  const [session, setSession] = useState("2023-24");
+  const [paper, setPaper] = useState("");
+  const [semester, setSemester] = useState("");
+  const [session, setSession] = useState("");
   const [file, setFile] = useState(null);
 
   const [loading, setLoading] = useState(false);
@@ -170,6 +170,7 @@ const PopUp = ({ handleClose }) => {
       <Dropdown
         data={papers}
         placeholder="Select Paper"
+        value={paper}
         onChange={(item) => {
           setPaper(item.value);
         }}
@@ -185,6 +186,7 @@ const PopUp = ({ handleClose }) => {
       <Dropdown
         data={sessions}
         placeholder="Select Session"
+        value={session}
         onChange={(item) => {
           setSession(item.value);
         }}
@@ -200,6 +202,7 @@ const PopUp = ({ handleClose }) => {
       <Dropdown
         data={semesters}
         placeholder="Select Semester"
+        value={semester}
         onChange={(item) => {
           setSemester(item.value);
         }}

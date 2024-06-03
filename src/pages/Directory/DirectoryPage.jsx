@@ -9,7 +9,6 @@ import {
 import React, { useState } from "react";
 import styles from "./styles/Theme";
 import ContactList from "./components/ContactList";
-import { useConText } from "../../context/Context";
 import { Dropdown } from "react-native-element-dropdown";
 const QBankPage = () => {
   const [Name, setName] = useState("");
@@ -33,6 +32,14 @@ const QBankPage = () => {
     { label: "Office", value: "Office" },
     { label: "Other", value: "Other" },
   ];
+
+  const handleReset = () => {
+    setName("");
+    setNumber("");
+    setDepartment("");
+    setStatus("");
+    setFetchedData([]);
+  };
 
   const handleFetch = async () => {
     setIsLoading(true);
@@ -90,9 +97,13 @@ const QBankPage = () => {
           value={Number}
           onChangeText={setNumber}
         />
+        <TouchableOpacity style={styles.ResetButton} onPress={handleReset}>
+          <Text style={styles.ButtonText}> 🗑 </Text>
+        </TouchableOpacity>
         <Dropdown
           data={departments}
           placeholder="Department"
+          value={department}
           onChange={(item) => {
             setDepartment(item.value);
           }}
@@ -112,6 +123,7 @@ const QBankPage = () => {
         <Dropdown
           data={statuses}
           placeholder="Status"
+          value={status}
           onChange={(item) => {
             setStatus(item.value);
           }}
@@ -130,7 +142,9 @@ const QBankPage = () => {
         </TouchableOpacity>
         <View style={styles.hr} />
       </View>
-      {!isLoading && fetchedData.filteredData && <ContactList data={fetchedData.filteredData} />}
+      {!isLoading && fetchedData.filteredData && (
+        <ContactList data={fetchedData.filteredData} />
+      )}
     </View>
   );
 };
