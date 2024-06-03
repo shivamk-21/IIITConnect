@@ -77,28 +77,7 @@ const Provider = ({ children }) => {
         credits,
         present: 0,
         absent: 0,
-        presentDates: [
-          "01/06/2024",
-          "02/06/2024",
-          "03/06/2024",
-          "04/06/2024",
-          "05/06/2024",
-          "06/06/2024",
-          "07/06/2024",
-          "08/06/2024",
-          "09/06/2024",
-          "10/06/2024",
-          "11/06/2024",
-          "12/06/2024",
-          "13/06/2024",
-          "14/06/2024",
-          "15/06/2024",
-          "16/06/2024",
-          "17/06/2024",
-          "18/06/2024",
-          "19/06/2024",
-          "20/06/2024",
-        ],
+        presentDates: [],
         absentDates: [],
       },
     ]);
@@ -139,26 +118,30 @@ const Provider = ({ children }) => {
     setSubject(updatedSubjects);
   };
 
-  const addPresentDate = (name, date) => {
+  const addPresentDate = (name, date, count) => {
     const updatedSubjects = subject.map((s) => {
       if (s.name === name) {
         return {
           ...s,
-          present: s.present + 1,
-          presentDates: [...s.presentDates, date],
+          present: s.present + parseInt(count),
+          presentDates: [
+            ...s.presentDates,
+            ...Array(parseInt(count)).fill(date),
+          ],
         };
       }
       return s;
     });
     setSubject(updatedSubjects);
   };
-  const addAbsentDate = (name, date) => {
+
+  const addAbsentDate = (name, date, count) => {
     const updatedSubjects = subject.map((s) => {
       if (s.name === name) {
         return {
           ...s,
-          absent: s.absent + 1,
-          absentDates: [...s.absentDates, date],
+          absent: s.absent + parseInt(count),
+          absentDates: [...s.absentDates, ...Array(parseInt(count)).fill(date)],
         };
       }
       return s;

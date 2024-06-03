@@ -1,55 +1,16 @@
 import React, { useState } from "react";
-import { Modal, Text, View, TouchableOpacity, TextInput } from "react-native";
-import { Picker } from "@react-native-picker/picker";
+import { Modal, Text, View, TouchableOpacity, Alert } from "react-native";
+import { Dropdown } from "react-native-element-dropdown";
+import styles from "../styles/Theme";
+import AddModal from "./AddModal";
 
 const EditModal = ({ data, closeModal }) => {
-  const [action, setAction] = useState("add");
-  const [status, setStatus] = useState();
-  const [selectedEntry, setSelectedEntry] = useState("");
-  const [date, setDate] = useState(new Date());
+  const [action, setAction] = useState("");
 
-  const onChange = (event, selectedDate) => {
-    const currentDate = selectedDate || date;
-    setShowDatePicker(Platform.OS === "ios");
-    setDate(currentDate);
-  };
-
-  const renderRemoveDropdown = () => {
-    const entries = [
-      ...data.subjectData.absent.map((date) => ({ type: "absent", date })),
-      ...data.subjectData.present.map((date) => ({ type: "present", date })),
-    ];
-
-    return (
-      <Picker
-        selectedValue={selectedEntry}
-        onValueChange={(itemValue) => setSelectedEntry(itemValue)}
-      >
-        {entries.map((entry, index) => (
-          <Picker.Item
-            key={index}
-            label={`${entry.type === "absent" ? "Absent" : "Present"}: ${
-              entry.date
-            }`}
-            value={`${entry.type}:${entry.date}`}
-          />
-        ))}
-      </Picker>
-    );
-  };
-
-  const renderAddOptions = () => (
-    <View>
-      <Picker
-        selectedValue={status}
-        onValueChange={(itemValue) => setStatus(itemValue)}
-      >
-        <Picker.Item label="Absent" value="absent" />
-        <Picker.Item label="Present" value="present" />
-      </Picker>
-      <Text>Select Date</Text>
-    </View>
-  );
+  const actions = [
+    { label: "Add Entry", value: "add" },
+    { label: "Delete Entry", value: "delete" },
+  ];
 
   return (
     <Modal
@@ -66,32 +27,45 @@ const EditModal = ({ data, closeModal }) => {
           backgroundColor: "rgba(0,0,0,0.5)",
         }}
       >
-        <View
-          style={{
-            backgroundColor: "#ffffff",
-            padding: 20,
-            borderRadius: 10,
-            alignItems: "center",
-          }}
-        >
-          <Text>Edit Subject</Text>
-          <Picker
-            style={{ backgroundColor:"red"}}
-            selectedValue={action}
-            onValueChange={(itemValue,itemIndex) => setAction(itemValue)}
-          >
-            <Picker.Item label="Add" value="add" />
-            <Picker.Item label="Remove" value="remove" />
-          </Picker>
-          {action === "remove" && renderRemoveDropdown()}
-          {action === "add" && renderAddOptions()}
-          <TouchableOpacity onPress={closeModal}>
-            <Text>Close</Text>
+        <View style={styles.modalContainer}>
+          <TouchableOpacity style={styles.modalClose} onPress={closeModal}>
+            <Text style={styles.modalText}>X</Text>
           </TouchableOpacity>
+          <Text
+            style={{
+              ...styles.modalText,
+              top: "6%",
+              position: "absolute",
+              left: "25%",
+            }}
+          >
+            Edit Attendance
+          </Text>
+          <Dropdown
+            data={actions}
+            placeholder="Select Action"
+            value={action}
+            onChange={(item) => {
+              setAction(item.value);
+            }}
+            placeholderStyle={styles.placeholderStyle}
+            labelField="label"
+            valueField="value"
+            style={styles.selectStatus}
+            maxHeight={500}
+            containerStyle={styles.selectStatusContainer}
+            itemTextStyle={styles.placeholderStyle}
+            selectedTextStyle={styles.placeholderStyle}
+          />
+          {action === "add" && (
+            <AddModal close={closeModal} data={data.subjectData.name} />
+          )}
         </View>
       </View>
     </Modal>
   );
 };
+
+
 
 export default EditModal;
