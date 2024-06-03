@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import User from "./components/User";
@@ -13,30 +13,36 @@ import { useConText } from "../../context/Context";
 const MainPage = () => {
   const navigation = useNavigation();
   const [showAccountsPage, setShowAccountsPage] = useState(false);
-  const { toggleTabBar } = useConText();
+  const { toggleTabBar, tabBarVisible } = useConText();
 
   const handleAttendancePress = () => {
-    navigation.navigate("Attendance"); 
+    navigation.navigate("Attendance");
   };
 
   const handlePaperPress = () => {
-    navigation.navigate("QBank"); 
+    navigation.navigate("QBank");
   };
 
   const handleUserClick = () => {
     setShowAccountsPage(true);
-    toggleTabBar();
+    toggleTabBar(false);
   };
   const handleClose = () => {
     setShowAccountsPage(false);
-    toggleTabBar();
+    toggleTabBar(true);
   };
+
+  useEffect(() => {
+    if (tabBarVisible) {
+      setShowAccountsPage(false);
+    }
+  }, [tabBarVisible]);
 
   return (
     <View style={{ flex: 1, backgroundColor: "#1F2B32" }}>
       {!showAccountsPage && (
         <>
-          <User onclick={handleUserClick} close={handleClose}/>
+          <User onclick={handleUserClick} close={handleClose} />
           <UserStatCard />
           <TouchableOpacity
             onPress={handleAttendancePress}
@@ -53,7 +59,7 @@ const MainPage = () => {
           <QuoteCard />
         </>
       )}
-      {showAccountsPage && <AccountsPage close={handleClose}/>}
+      {showAccountsPage && <AccountsPage close={handleClose} />}
     </View>
   );
 };

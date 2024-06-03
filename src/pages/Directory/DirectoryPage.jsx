@@ -34,8 +34,6 @@ const QBankPage = () => {
     { label: "Other", value: "Other" },
   ];
 
-  const { toggleTabBar } = useConText();
-
   const handleFetch = async () => {
     setIsLoading(true);
     if (Name === "" && Number === "" && department === "" && status === "") {

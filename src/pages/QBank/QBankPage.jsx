@@ -6,7 +6,7 @@ import {
   Text,
   ActivityIndicator,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./styles/Theme";
 import PaperList from "./components/PaperList";
 import { useConText } from "../../context/Context";
@@ -18,17 +18,24 @@ const QBankPage = () => {
   const [fetchedData, setFetchedData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isShown, setIsShown] = useState(false);
-  const { toggleTabBar } = useConText();
+  const { toggleTabBar, tabBarVisible } = useConText();
 
   const handlePress = () => {
-    toggleTabBar();
+    toggleTabBar(false);
     setIsShown(true);
   };
 
   const handleClose = () => {
-    toggleTabBar();
+    toggleTabBar(true);
     setIsShown(false);
   };
+
+  useEffect(() => {
+    if (tabBarVisible) {
+      setIsShown(false);
+    }
+  }, [tabBarVisible]);
+
   const handleFetch = async () => {
     setIsLoading(true);
     if (subjectName === "" && subjectCode === "") {

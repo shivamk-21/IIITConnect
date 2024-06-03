@@ -1,5 +1,5 @@
-import React from "react";
-import { Image } from "react-native";
+import React,{useEffect} from "react";
+import { Image,BackHandler } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import HomePage from "./src/pages/HomePage/HomePage";
@@ -11,7 +11,7 @@ import { useConText } from "./src/context/Context";
 const Tab = createBottomTabNavigator();
 
 const Navigation = () => {
-  const { tabBarVisible } = useConText();
+  const { tabBarVisible,toggleTabBar } = useConText();
   const screenOptions = ({ route }) => ({
     headerShown: false,
     tabBarStyle: {
@@ -24,8 +24,8 @@ const Navigation = () => {
       paddingRight: "3%",
       paddingTop: "1%",
       borderTopWidth: 0,
-      height: "8%",
-      bottom: tabBarVisible ? 0 : "-8%",
+      height: 70,
+      bottom: tabBarVisible ? 0 : -70,
     },
     tabBarLabelStyle: {
       color: "#ffffff",
@@ -60,6 +60,22 @@ const Navigation = () => {
       );
     },
   });
+
+
+  useEffect(() => {
+    const backHandler = BackHandler.addEventListener('hardwareBackPress', handleBackButton);
+
+    return () => {
+      backHandler.remove();
+    };
+  }, []);
+
+  const handleBackButton = () => {
+    toggleTabBar(true)
+    return true;
+  };
+
+
   return (
     <NavigationContainer style={{ backgroundColor: "#1F2B32" }}>
       <Tab.Navigator

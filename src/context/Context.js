@@ -12,8 +12,8 @@ const Provider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [tabBarVisible, setTabBarVisible] = useState(true);
 
-  const toggleTabBar = () => {
-    setTabBarVisible((prev) => !prev);
+  const toggleTabBar = (state) => {
+    setTabBarVisible(state);
   };
   const fetchQuote = async () => {
     try {

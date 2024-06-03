@@ -1,13 +1,12 @@
 import { Text, View, ScrollView } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "../styles/Theme";
 import SubjectCard from "../components/SubjectCard";
 import SubjectInfo from "../components/SubjectInfo";
 import { useConText } from "../../../context/Context";
-import { PreventRemoveProvider } from "@react-navigation/core";
 
 const SubjectList = () => {
-  const { subject, toggleTabBar, removeSubject } = useConText();
+  const { subject, toggleTabBar, removeSubject, tabBarVisible } = useConText();
   const [popupShown, setPopupShown] = useState(false);
   const [popUpData, setPopUpData] = useState({});
   const colours = [
@@ -36,19 +35,26 @@ const SubjectList = () => {
       SliderSecondary: "#CDD9EF",
     },
   ];
+
+  useEffect(() => {
+    if (tabBarVisible){
+      setPopupShown(false)
+    }
+  }, [tabBarVisible]);
+  
   const handlePopUp = async (data, c) => {
     setPopUpData({ subjectData: data, color: c });
-    toggleTabBar();
+    toggleTabBar(false);
     setPopupShown(!popupShown);
   };
   const handlePopUpClose = () => {
     setPopupShown(!popupShown);
-    toggleTabBar();
+    toggleTabBar(true);
   };
   const handleRemove = (name) => {
     removeSubject(name);
     setPopupShown(!popupShown);
-    toggleTabBar();
+    toggleTabBar(true);
   };
   return (
     <>
