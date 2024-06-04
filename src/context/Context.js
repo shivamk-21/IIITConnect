@@ -26,7 +26,6 @@ const Provider = ({ children }) => {
       });
       setLoading(false);
     } catch (error) {
-      console.error("Error fetching quote:", error);
       setLoading(false);
     }
   };

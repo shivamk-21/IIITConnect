@@ -67,7 +67,6 @@ const QBankPage = () => {
         const data = await response.json();
         setFetchedData(data);
       } catch (error) {
-        console.error("Error fetching data:", error.message);
         throw error;
       } finally {
         setIsLoading(false);

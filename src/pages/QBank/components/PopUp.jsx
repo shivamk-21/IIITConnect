@@ -113,7 +113,6 @@ const PopUp = ({ handleClose }) => {
       }
     } catch (error) {
       Alert.alert("Error", "Error uploading file");
-      console.error(error);
     } finally {
       setLoading(false);
     }
@@ -134,7 +133,6 @@ const PopUp = ({ handleClose }) => {
         Alert.alert("File selection was canceled");
       }
     } catch (error) {
-      console.error("Error selecting files: ", error);
       Alert.alert("An error occurred during file selection");
     } finally {
       setLoading(false);

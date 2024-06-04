@@ -47,7 +47,7 @@ const SubjectInfo = ({ data, handleClose, handleremove }) => {
       [
         {
           text: "Cancel",
-          onPress: () => console.log("Cancel Pressed"),
+          onPress: () => {},
           style: "cancel",
         },
         { text: "Remove", onPress: () => handleremove(data.subjectData.name) },
