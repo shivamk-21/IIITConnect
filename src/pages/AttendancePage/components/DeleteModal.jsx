@@ -21,11 +21,11 @@ const DeleteModal = ({ close, data }) => {
   ];
 
   const handlePress = () => {
-    if (date.length !== 1) {
+    if (date.length === 0) {
       Alert.alert("Please select dates");
       return;
     }
-    deleteDates(data.name,date);
+    deleteDates(data.name, date);
     close();
   };
 

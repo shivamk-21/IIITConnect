@@ -14,7 +14,7 @@ import EditModal from "./EditModal";
 
 const SubjectInfo = ({ data, handleClose, handleremove }) => {
   const expAb = Math.round(
-    (data.subjectData.credits * 7) / 4 - data.subjectData.absent
+    ((data.subjectData.credits * 14) / 4) - data.subjectData.absent
   );
 
   const percentage = Math.round(
@@ -37,6 +37,8 @@ const SubjectInfo = ({ data, handleClose, handleremove }) => {
     }
     setFontSize(currentFontSize);
   }, []);
+
+  
 
   const confirmRemove = () => {
     Alert.alert(

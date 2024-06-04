@@ -37,11 +37,21 @@ const SubjectList = () => {
   ];
 
   useEffect(() => {
-    if (tabBarVisible){
-      setPopupShown(false)
+    if (tabBarVisible) {
+      setPopupShown(false);
     }
   }, [tabBarVisible]);
-  
+
+  useEffect(() => {
+    if (popUpData.subjectData && subject.length > 0) {
+      subject.map((subjectItem, index) => {
+        if (subjectItem.name === popUpData.subjectData.name) {
+          setPopUpData({ subjectData: subjectItem, color: popUpData.color });
+        }
+      });
+    }
+  }, [subject]);
+
   const handlePopUp = async (data, c) => {
     setPopUpData({ subjectData: data, color: c });
     toggleTabBar(false);
