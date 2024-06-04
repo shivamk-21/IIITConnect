@@ -149,6 +149,49 @@ const Provider = ({ children }) => {
     setSubject(updatedSubjects);
   };
 
+  const deleteDates = (name, dates) => {
+    const extractedDates = dates.map((dateString) => {
+      const dateParts = dateString.split(": ");
+      return dateParts[1];
+    });
+
+    const updatedSubjects = subject.map((s) => {
+      if (s.name === name) {
+        let removedPresentDatesCount = 0;
+        let removedAbsentDatesCount = 0;
+
+        const presentDates = [...s.presentDates];
+        const absentDates = [...s.absentDates];
+
+        extractedDates.forEach((date) => {
+          const presentIndex = presentDates.indexOf(date);
+          if (presentIndex !== -1) {
+            presentDates.splice(presentIndex, 1);
+            removedPresentDatesCount++;
+            return;
+          }
+
+          const absentIndex = absentDates.indexOf(date);
+          if (absentIndex !== -1) {
+            absentDates.splice(absentIndex, 1);
+            removedAbsentDatesCount++;
+            return;
+          }
+        });
+
+        return {
+          ...s,
+          presentDates,
+          absentDates,
+          present: s.present - removedPresentDatesCount,
+          absent: s.absent - removedAbsentDatesCount,
+        };
+      }
+      return s;
+    });
+
+    setSubject(updatedSubjects);
+  };
   const updateSubject = (name, newAbsent, newPresent) => {
     const updatedSubjects = subject.map((s) => {
       if (s.name === name) {
@@ -163,8 +206,8 @@ const Provider = ({ children }) => {
     quoteData,
     loading,
     tabBarVisible,
-    toggleTabBar,
     subject,
+    toggleTabBar,
     addSubject,
     removeSubject,
     addPresent,
@@ -172,6 +215,7 @@ const Provider = ({ children }) => {
     updateSubject,
     addAbsentDate,
     addPresentDate,
+    deleteDates,
   };
   return (
     <CentralData.Provider value={valuesToShare}>

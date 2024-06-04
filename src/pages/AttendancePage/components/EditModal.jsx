@@ -3,6 +3,7 @@ import { Modal, Text, View, TouchableOpacity, Alert } from "react-native";
 import { Dropdown } from "react-native-element-dropdown";
 import styles from "../styles/Theme";
 import AddModal from "./AddModal";
+import DeleteModal from "./DeleteModal";
 
 const EditModal = ({ data, closeModal }) => {
   const [action, setAction] = useState("");
@@ -60,12 +61,13 @@ const EditModal = ({ data, closeModal }) => {
           {action === "add" && (
             <AddModal close={closeModal} data={data.subjectData.name} />
           )}
+          {action === "delete" && (
+            <DeleteModal close={closeModal} data={data.subjectData} />
+          )}
         </View>
       </View>
     </Modal>
   );
 };
-
-
 
 export default EditModal;
