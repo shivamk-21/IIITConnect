@@ -18,7 +18,7 @@ const SliderComponent = ({ credits, setCredits }) => {
         value={credits}
         onValueChange={handleValueChange}
         minimumTrackTintColor="transparent" 
-        thumbTintColor="#8C99A0"
+        thumbTintColor="transparent"
         maximumTrackTintColor="transparent"
       />
       <View style={styles.SliderFake}>
