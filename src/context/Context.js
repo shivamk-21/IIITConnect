@@ -11,6 +11,7 @@ const Provider = ({ children }) => {
   });
   const [loading, setLoading] = useState(true);
   const [tabBarVisible, setTabBarVisible] = useState(true);
+  const [logStatus, setLogStatus] = useState(false);
 
   const toggleTabBar = (state) => {
     setTabBarVisible(state);
@@ -206,6 +207,8 @@ const Provider = ({ children }) => {
     loading,
     tabBarVisible,
     subject,
+    logStatus,
+    setLogStatus,
     toggleTabBar,
     addSubject,
     removeSubject,

@@ -1,17 +1,17 @@
-import React,{useEffect} from "react";
-import { Image,BackHandler } from "react-native";
+import React, { useEffect } from "react";
+import { Image, BackHandler } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import HomePage from "./src/pages/HomePage/HomePage";
-import AccountsPage from "./src/pages/AccountsPage/AccountsPage";
 import AttendancePage from "./src/pages/AttendancePage/AttendancePage";
 import QBankPage from "./src/pages/QBank/QBankPage";
 import DirectoryPage from "./src/pages/Directory/DirectoryPage";
 import { useConText } from "./src/context/Context";
+import Loginpage from "./src/pages/LoginPage/LoginPage";
 const Tab = createBottomTabNavigator();
 
 const Navigation = () => {
-  const { tabBarVisible,toggleTabBar } = useConText();
+  const { tabBarVisible, toggleTabBar, logStatus } = useConText();
   const screenOptions = ({ route }) => ({
     headerShown: false,
     tabBarStyle: {
@@ -61,9 +61,11 @@ const Navigation = () => {
     },
   });
 
-
   useEffect(() => {
-    const backHandler = BackHandler.addEventListener('hardwareBackPress', handleBackButton);
+    const backHandler = BackHandler.addEventListener(
+      "hardwareBackPress",
+      handleBackButton
+    );
 
     return () => {
       backHandler.remove();
@@ -71,23 +73,27 @@ const Navigation = () => {
   }, []);
 
   const handleBackButton = () => {
-    toggleTabBar(true)
+    toggleTabBar(true);
     return true;
   };
 
-
   return (
-    <NavigationContainer style={{ backgroundColor: "#1F2B32" }}>
-      <Tab.Navigator
-        screenOptions={screenOptions}
-        style={{ flex: 1, backgroundColor: "#1F2B32" }}
-      >
-        <Tab.Screen name="Home" component={HomePage} />
-        <Tab.Screen name="Attendance" component={AttendancePage} />
-        <Tab.Screen name="QBank" component={QBankPage} />
-        <Tab.Screen name="Directory" component={DirectoryPage} />
-      </Tab.Navigator>
-    </NavigationContainer>
+    <>
+      {!logStatus && <Loginpage />}
+      {logStatus && (
+        <NavigationContainer style={{ backgroundColor: "#1F2B32" }}>
+          <Tab.Navigator
+            screenOptions={screenOptions}
+            style={{ flex: 1, backgroundColor: "#1F2B32" }}
+          >
+            <Tab.Screen name="Home" component={HomePage} />
+            <Tab.Screen name="Attendance" component={AttendancePage} />
+            <Tab.Screen name="QBank" component={QBankPage} />
+            <Tab.Screen name="Directory" component={DirectoryPage} />
+          </Tab.Navigator>
+        </NavigationContainer>
+      )}
+    </>
   );
 };
 
