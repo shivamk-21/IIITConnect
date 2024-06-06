@@ -13,7 +13,7 @@ import { useConText } from "../../context/Context";
 const MainPage = () => {
   const navigation = useNavigation();
   const [showAccountsPage, setShowAccountsPage] = useState(false);
-  const { toggleTabBar, tabBarVisible } = useConText();
+  const { toggleTabBar, tabBarVisible, accessedPapers } = useConText();
 
   const handleAttendancePress = () => {
     navigation.navigate("Attendance");
@@ -54,7 +54,7 @@ const MainPage = () => {
             onPress={handlePaperPress}
             style={styles.paperCardBase}
           >
-            <PaperCard />
+            <PaperCard count={accessedPapers} />
           </TouchableOpacity>
           <QuoteCard />
         </>

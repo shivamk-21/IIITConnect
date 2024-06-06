@@ -8,10 +8,12 @@ import {
 import React, { useState, useEffect } from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import styles from "../styles/Theme";
+import { useConText } from "../../../context/Context";
 
 const PaperCard = ({ data, colorData }) => {
   const [fontSize, setFontSize] = useState(25);
   const [blocking, setBlocking] = useState(false);
+  const { increaseAccessedPapers } = useConText();
 
   useEffect(() => {
     const { width: containerWidth } = Dimensions.get("window");
@@ -30,6 +32,7 @@ const PaperCard = ({ data, colorData }) => {
 
   const handlePress = () => {
     setBlocking(true);
+    increaseAccessedPapers();
     Linking.openURL(data.driveLink);
     setBlocking(false);
   };

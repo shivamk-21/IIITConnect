@@ -12,6 +12,7 @@ const Provider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [tabBarVisible, setTabBarVisible] = useState(true);
   const [logStatus, setLogStatus] = useState(false);
+  const [accessedPapers, setAccessedPapers] = useState(0);
 
   const toggleTabBar = (state) => {
     setTabBarVisible(state);
@@ -68,6 +69,28 @@ const Provider = ({ children }) => {
       await AsyncStorage.setItem("subject", JSON.stringify(subject));
     } catch (error) {}
   };
+
+  const saveAccessedPapers = async () => {
+    try {
+      await AsyncStorage.setItem("accessedPapers", accessedPapers.toString());
+    } catch (error) {}
+  };
+
+  const loadAccessedPapers = async () => {
+    try {
+      const savedAccessedPapers = await AsyncStorage.getItem("accessedPapers");
+      if (savedAccessedPapers) {
+        setAccessedPapers(parseInt(savedAccessedPapers));
+      }
+    } catch (error) {}
+  };
+
+  useEffect(() => {
+    loadAccessedPapers();
+  });
+  useEffect(() => {
+    saveAccessedPapers();
+  }, [accessedPapers]);
 
   const addSubject = (name, credits) => {
     setSubject([
@@ -202,12 +225,18 @@ const Provider = ({ children }) => {
     setSubject(updatedSubjects);
   };
 
+  const increaseAccessedPapers = () => {
+    setAccessedPapers(accessedPapers + 1);
+  };
+
   valuesToShare = {
     quoteData,
     loading,
     tabBarVisible,
     subject,
     logStatus,
+    accessedPapers,
+    increaseAccessedPapers,
     setLogStatus,
     toggleTabBar,
     addSubject,

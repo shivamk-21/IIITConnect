@@ -3,7 +3,7 @@ import React from "react";
 import styles from "../styles/GlobalLight";
 import { LinearGradient } from "expo-linear-gradient";
 
-const PaperCard = () => {
+const PaperCard = ({count}) => {
   return (
     <LinearGradient
       colors={["#FFB978", "#FF7A00"]}
@@ -12,7 +12,7 @@ const PaperCard = () => {
       style={styles.paperCard}
     >
       <Text style={styles.paperCardText}>Paper Accessed</Text>
-      <Text style={styles.paperCardText2}>70+</Text>
+      <Text style={styles.paperCardText2}>{count}</Text>
     </LinearGradient>
   );
 };
