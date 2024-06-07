@@ -87,7 +87,7 @@ const Provider = ({ children }) => {
 
   useEffect(() => {
     loadAccessedPapers();
-  });
+  }, []);
   useEffect(() => {
     saveAccessedPapers();
   }, [accessedPapers]);
