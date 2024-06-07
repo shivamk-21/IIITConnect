@@ -65,6 +65,7 @@ const styles = StyleSheet.create({
     height: "95%",
     width: "100%",
     top: 101,
+    zIndex:-1
   },
   PaperCardBase: {
     width: "95%",
