@@ -6,8 +6,9 @@ import {
   Dimensions,
   Alert,
   ActivityIndicator,
+  Animated,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "../styles/Theme";
 import { Dropdown } from "react-native-element-dropdown";
 import * as DocumentPicker from "expo-document-picker";
@@ -25,6 +26,23 @@ const PopUp = ({ handleClose }) => {
   const [file, setFile] = useState(null);
 
   const [loading, setLoading] = useState(false);
+  const slideAnim = useState(new Animated.Value(0))[0];
+
+  useEffect(() => {
+    Animated.timing(slideAnim, {
+      toValue: 1,
+      duration: 200,
+      useNativeDriver: true,
+    }).start();
+  }, []);
+
+  const handleDismiss = () => {
+    Animated.timing(slideAnim, {
+      toValue: 0,
+      duration: 200,
+      useNativeDriver: true,
+    }).start(() => handleClose());
+  };
 
   const papers = [
     { label: "MT", value: "MT" },
@@ -107,7 +125,7 @@ const PopUp = ({ handleClose }) => {
 
       if (response.status === 200) {
         Alert.alert("Success", response.data.response);
-        handleClose();
+        handleDismiss();
       } else {
         Alert.alert("Error", response.data.error || "Error uploading file");
       }
@@ -139,7 +157,21 @@ const PopUp = ({ handleClose }) => {
     }
   };
   return (
-    <View style={styles.PopUp}>
+    <Animated.View
+      style={[
+        styles.PopUp,
+        {
+          transform: [
+            {
+              translateY: slideAnim.interpolate({
+                inputRange: [0, 1],
+                outputRange: [Dimensions.get("window").height, 0],
+              }),
+            },
+          ],
+        },
+      ]}
+    >
       <TextInput
         style={styles.AddInput}
         placeholder="Subject Name"
@@ -147,7 +179,7 @@ const PopUp = ({ handleClose }) => {
         value={subjectName}
         onChangeText={setSubjectName}
       />
-      <TouchableOpacity style={styles.close} onPress={handleClose}>
+      <TouchableOpacity style={styles.close} onPress={handleDismiss}>
         <Text
           style={{
             fontFamily: "Pacifico_400Regular",
@@ -229,7 +261,7 @@ const PopUp = ({ handleClose }) => {
       </TouchableOpacity>
       <TouchableOpacity
         style={{ ...styles.Cancel, left: "5%" }}
-        onPress={handleClose}
+        onPress={handleDismiss}
       >
         <Text
           style={{
@@ -260,7 +292,7 @@ const PopUp = ({ handleClose }) => {
           <ActivityIndicator size="large" color="#0000ff" />
         </View>
       )}
-    </View>
+    </Animated.View>
   );
 };
 

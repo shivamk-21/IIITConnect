@@ -1,12 +1,14 @@
+import React, { useState, useEffect } from "react";
 import {
-  Text,
-  View,
   TouchableOpacity,
+  View,
+  TextInput,
+  Text,
   Dimensions,
   Alert,
+  Animated,
   Modal,
 } from "react-native";
-import React, { useState, useEffect } from "react";
 import styles from "../styles/Theme";
 import { LinearGradient } from "expo-linear-gradient";
 import Calendar from "./Calendar";
@@ -24,7 +26,16 @@ const SubjectInfo = ({ data, handleClose, handleremove }) => {
   );
 
   const [fontSize, setFontSize] = useState(25);
+  const slideAnim = useState(new Animated.Value(Dimensions.get("window").height))[0]; // Initial position off the screen
   const [modalVisible, setModalVisible] = useState(false);
+
+  useEffect(() => {
+    Animated.timing(slideAnim, {
+      toValue: 0,
+      duration: 500, // Adjust duration as needed
+      useNativeDriver: true, // Use native driver for better performance
+    }).start();
+  }, []);
 
   useEffect(() => {
     const { width: containerWidth } = Dimensions.get("window");
@@ -37,8 +48,6 @@ const SubjectInfo = ({ data, handleClose, handleremove }) => {
     }
     setFontSize(currentFontSize);
   }, []);
-
-  
 
   const confirmRemove = () => {
     Alert.alert(
@@ -56,8 +65,18 @@ const SubjectInfo = ({ data, handleClose, handleremove }) => {
     );
   };
 
+  const handleModalClose = () => {
+    Animated.timing(slideAnim, {
+      toValue: Dimensions.get("window").height,
+      duration: 500, // Adjust duration as needed
+      useNativeDriver: true, // Use native driver for better performance
+    }).start(() => {
+      handleClose();
+    });
+  };
+
   return (
-    <View style={styles.SubjectInfo}>
+    <Animated.View style={[styles.SubjectInfo, { transform: [{ translateY: slideAnim }] }]}>
       <LinearGradient
         colors={[data.color.Primary, data.color.Secondary]}
         start={{ x: 0, y: 0 }}
@@ -118,7 +137,7 @@ const SubjectInfo = ({ data, handleClose, handleremove }) => {
             backgroundColor: data.color.SliderSecondary,
             right: "2.5%",
           }}
-          onPress={handleClose}
+          onPress={handleModalClose}
         >
           <Text
             style={{
@@ -157,7 +176,7 @@ const SubjectInfo = ({ data, handleClose, handleremove }) => {
           <EditModal data={data} closeModal={() => setModalVisible(false)} />
         </Modal>
       </LinearGradient>
-    </View>
+    </Animated.View>
   );
 };
 

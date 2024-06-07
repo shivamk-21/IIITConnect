@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
   },
   Button: {
     width: "45%",
-    height: 60,
+    height: 70,
     backgroundColor: "#414B51",
     borderRadius: 100,
     margin: "2.5%",

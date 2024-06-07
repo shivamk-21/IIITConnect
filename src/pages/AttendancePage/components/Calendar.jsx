@@ -47,6 +47,7 @@ const Calendar = ({ data }) => {
   }, [data]);
 
   const handleLeft = () => {
+    if (visibleDates.length === 0) return;
     const currentFirstDate = visibleDates[0].date;
     const currentIndex = Array.from(allDatesMap.keys()).indexOf(
       currentFirstDate
@@ -60,6 +61,7 @@ const Calendar = ({ data }) => {
   };
 
   const handleRight = () => {
+    if (visibleDates.length === 0) return;
     const currentLastDate = visibleDates[visibleDates.length - 1].date;
     const currentIndex = Array.from(allDatesMap.keys()).indexOf(
       currentLastDate

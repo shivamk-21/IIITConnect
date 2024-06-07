@@ -1,18 +1,29 @@
-import { Text, View, TouchableOpacity, Dimensions } from "react-native";
+// Add import for useState and useEffect if not already imported
 import React, { useState, useEffect } from "react";
+import {
+  Text,
+  View,
+  TouchableOpacity,
+  Dimensions,
+  Animated,
+} from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import styles from "../styles/Theme";
 import { useConText } from "../../../context/Context";
-const SubjectCard = ({ subjectData, colorData,handlePopUp }) => {
+
+const SubjectCard = ({ subjectData, colorData, handlePopUp }) => {
   const { absent, present } = subjectData;
   const total = absent + present;
   const percent = total ? ((present / total) * 100).toFixed(0) : 0;
   const [fontSize, setFontSize] = useState(25);
   const [isShown, setIsShown] = useState(false);
+  const [slideAnim] = useState(new Animated.Value(0));
+
   const { addPresent, addAbsent } = useConText();
+
   useEffect(() => {
     const { width: containerWidth } = Dimensions.get("window");
-    const maxWidth = 0.70 * containerWidth;
+    const maxWidth = 0.7 * containerWidth;
 
     let currentFontSize = 30;
     let textWidth = currentFontSize * subjectData.name.length * 0.6;
@@ -24,9 +35,34 @@ const SubjectCard = ({ subjectData, colorData,handlePopUp }) => {
 
     setFontSize(currentFontSize);
   }, []);
-  handlepress = () => {
-    setIsShown(!isShown);
+
+  const handlePress = () => {
+    if (!isShown) {
+      slideIn();
+    } else {
+      slideOut();
+    }
   };
+
+  const slideIn = () => {
+    setIsShown(true);
+    Animated.timing(slideAnim, {
+      toValue: 1,
+      duration: 200,
+      useNativeDriver: true,
+    }).start();
+  };
+
+  const slideOut = () => {
+    Animated.timing(slideAnim, {
+      toValue: 0,
+      duration: 200,
+      useNativeDriver: true,
+    }).start(() => {
+      setIsShown(false);
+    });
+  };
+
   const handleAbsentPress = () => {
     addAbsent(subjectData.name);
   };
@@ -38,10 +74,16 @@ const SubjectCard = ({ subjectData, colorData,handlePopUp }) => {
   const handlePopUpLocal = () => {
     setIsShown(false);
     handlePopUp();
-  }
+  };
+
   return (
     <>
-      <TouchableOpacity style={styles.AttendanceCardBase} onPress={handlepress} onLongPress={handlePopUpLocal}>
+      <TouchableOpacity
+        activeOpacity={1}
+        style={styles.AttendanceCardBase}
+        onPress={handlePress}
+        onLongPress={handlePopUpLocal}
+      >
         <LinearGradient
           colors={[colorData.Primary, colorData.Secondary]}
           start={{ x: 0, y: 1 }}
@@ -68,11 +110,21 @@ const SubjectCard = ({ subjectData, colorData,handlePopUp }) => {
         </LinearGradient>
       </TouchableOpacity>
       {isShown && (
-        <View
-          style={{
-            ...styles.subjectCardSub,
-            backgroundColor: colorData.SliderPrimary,
-          }}
+        <Animated.View
+          style={[
+            styles.subjectCardSub,
+            { backgroundColor: colorData.SliderPrimary },
+            {
+              transform: [
+                {
+                  translateY: slideAnim.interpolate({
+                    inputRange: [0, 1],
+                    outputRange: [-100, 0],
+                  }),
+                },
+              ],
+            },
+          ]}
         >
           <TouchableOpacity
             style={{ ...styles.actionButton, left: "3%" }}
@@ -100,7 +152,7 @@ const SubjectCard = ({ subjectData, colorData,handlePopUp }) => {
               <Text style={styles.actionButtonText}>Present</Text>
             </LinearGradient>
           </TouchableOpacity>
-        </View>
+        </Animated.View>
       )}
     </>
   );

@@ -1,12 +1,12 @@
+import React, { useState, useEffect } from "react";
 import {
   TouchableOpacity,
-  View,
   TextInput,
   Text,
   Dimensions,
   Alert,
+  Animated,
 } from "react-native";
-import React, { useState } from "react";
 import styles from "../styles/Theme";
 import Slider from "./Slider";
 import { useConText } from "../../../context/Context";
@@ -14,8 +14,17 @@ import { useConText } from "../../../context/Context";
 const PopUp = ({ close }) => {
   const [credits, setCredits] = useState(0);
   const [subjectName, setSubjectName] = useState("");
+  const slideAnim = useState(new Animated.Value(0))[0];
 
   const { subject, addSubject } = useConText();
+
+  useEffect(() => {
+    Animated.timing(slideAnim, {
+      toValue: 1,
+      duration: 200,
+      useNativeDriver: true,
+    }).start();
+  }, []);
 
   const handleButtonPress = () => {
     const s = subject.find((item) => item.name === subjectName);
@@ -36,8 +45,30 @@ const PopUp = ({ close }) => {
     close();
   };
 
+  const handleDismiss = () => {
+    Animated.timing(slideAnim, {
+      toValue: 0,
+      duration: 200,
+      useNativeDriver: true,
+    }).start(() => close());
+  };
+
   return (
-    <View style={styles.PopUp}>
+    <Animated.View
+      style={[
+        styles.PopUp,
+        {
+          transform: [
+            {
+              translateY: slideAnim.interpolate({
+                inputRange: [0, 1],
+                outputRange: [Dimensions.get("window").height, 0],
+              }),
+            },
+          ],
+        },
+      ]}
+    >
       <TextInput
         style={styles.AddInput}
         placeholder="Subject Name"
@@ -45,7 +76,7 @@ const PopUp = ({ close }) => {
         value={subjectName}
         onChangeText={setSubjectName}
       />
-      <TouchableOpacity style={styles.close} onPress={close}>
+      <TouchableOpacity style={styles.close} onPress={handleDismiss}>
         <Text
           style={{
             fontFamily: "Pacifico_400Regular",
@@ -67,7 +98,7 @@ const PopUp = ({ close }) => {
       <Slider credits={credits} setCredits={setCredits} />
       <TouchableOpacity
         style={{ ...styles.Cancel, left: "5%" }}
-        onPress={close}
+        onPress={handleDismiss}
       >
         <Text
           style={{
@@ -93,7 +124,7 @@ const PopUp = ({ close }) => {
           Add
         </Text>
       </TouchableOpacity>
-    </View>
+    </Animated.View>
   );
 };
 

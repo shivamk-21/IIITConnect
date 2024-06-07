@@ -17,10 +17,11 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 40,
     borderColor: "#8C99A0",
     borderWidth: 1,
+    paddingLeft: 25,
   },
   Code: {
-    width: "35%",
-    height: 60,
+    width: "39%",
+    height: 70,
     backgroundColor: "#414B51",
     margin: "2.5%",
     fontSize: 20,
@@ -29,14 +30,14 @@ const styles = StyleSheet.create({
     color: "#8C99A0",
     position: "absolute",
     top: 0,
-    right: "18.6%",
+    right: "17.5%",
     borderColor: "#8C99A0",
     borderWidth: 1,
-
+    paddingLeft: 40,
   },
   Button: {
-    width: "15%",
-    height: 60,
+    width: "18%",
+    height: 76.5,
     backgroundColor: "#414B51",
     margin: "2.5%",
     alignContent: "center",
@@ -49,8 +50,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   ResetButton: {
-    width: "15%",
-    height: 60,
+    width: "18%",
+    height: 76.5,
     backgroundColor: "#414B51",
     margin: "2.5%",
     alignContent: "center",
@@ -161,7 +162,7 @@ const styles = StyleSheet.create({
     height: "50%",
     position: "absolute",
     left: 0,
-    margin:"2.5%",
+    margin: "2.5%",
   },
 });
 export default styles;
