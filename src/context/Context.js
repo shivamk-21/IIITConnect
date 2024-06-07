@@ -2,6 +2,7 @@ import React, { createContext, useState, useEffect, useContext } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 const CentralData = createContext();
+import {QUOTE_LINK} from "@env"
 
 const Provider = ({ children }) => {
   const [subject, setSubject] = useState([]);
@@ -20,7 +21,7 @@ const Provider = ({ children }) => {
   const fetchQuote = async () => {
     try {
       const response = await axios.get(
-        `https://iiit-backend.onrender.com/quote`
+        QUOTE_LINK
       );
       setQuoteData({
         quote: response.data.quote,

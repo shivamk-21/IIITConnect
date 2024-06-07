@@ -11,6 +11,7 @@ import styles from "./styles/Theme";
 import PaperList from "./components/PaperList";
 import { useConText } from "../../context/Context";
 import PopUp from "./components/PopUp";
+import {Q_SEARCH} from "@env"
 
 const QBankPage = () => {
   const [subjectName, setSubjectName] = useState("");
@@ -43,7 +44,7 @@ const QBankPage = () => {
       setIsLoading(false);
     } else {
       try {
-        const url = new URL(`https://iiit-backend.onrender.com/search`);
+        const url = new URL(Q_SEARCH);
         url.searchParams.append("subjectName", subjectName);
         url.searchParams.append("subjectCode", subjectCode);
 

@@ -1,7 +1,6 @@
 import {
   TouchableOpacity,
   View,
-  Image,
   TextInput,
   Text,
   ActivityIndicator,
@@ -10,6 +9,8 @@ import React, { useState } from "react";
 import styles from "./styles/Theme";
 import ContactList from "./components/ContactList";
 import { Dropdown } from "react-native-element-dropdown";
+import {CONTACT_SEARCH} from "@env"
+
 const QBankPage = () => {
   const [Name, setName] = useState("");
   const [Number, setNumber] = useState("");
@@ -48,7 +49,7 @@ const QBankPage = () => {
       setIsLoading(false);
     } else {
       try {
-        const url = new URL(`https://iiit-backend.onrender.com/contact`);
+        const url = new URL(CONTACT_SEARCH);
         url.searchParams.append("name", Name);
         url.searchParams.append("type", status);
         url.searchParams.append("department", department);
