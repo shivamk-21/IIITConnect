@@ -298,7 +298,7 @@ const styles = StyleSheet.create({
   calendarFormat: {
     flexDirection: "row",
     flexWrap: "wrap",
-    justifyContent: "space-between",
+    justifyContent: "left",
     alignItems: "flex-start",
     width: "70%",
     height: "100%",
