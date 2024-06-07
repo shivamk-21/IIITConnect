@@ -15,7 +15,7 @@ import * as DocumentPicker from "expo-document-picker";
 import axios from "axios";
 import * as FileSystem from "expo-file-system";
 import JSZip from "jszip";
-import { Q_UPLOAD } from "@env";
+import ENV_VAR from "../../../../env";
 
 const PopUp = ({ handleClose }) => {
   const [subjectName, setSubjectName] = useState("");
@@ -114,7 +114,7 @@ const PopUp = ({ handleClose }) => {
     }
 
     try {
-      const response = await axios.post(Q_UPLOAD, formData, {
+      const response = await axios.post(ENV_VAR.Q_UPLOAD, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },

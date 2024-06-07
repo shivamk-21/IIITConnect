@@ -9,7 +9,7 @@ import React, { useState } from "react";
 import styles from "./styles/Theme";
 import ContactList from "./components/ContactList";
 import { Dropdown } from "react-native-element-dropdown";
-import {CONTACT_SEARCH} from "@env"
+import ENV_VAR from "../../../env"
 
 const QBankPage = () => {
   const [Name, setName] = useState("");
@@ -49,7 +49,7 @@ const QBankPage = () => {
       setIsLoading(false);
     } else {
       try {
-        const url = new URL(CONTACT_SEARCH);
+        const url = new URL(ENV_VAR.CONTACT_SEARCH);
         url.searchParams.append("name", Name);
         url.searchParams.append("type", status);
         url.searchParams.append("department", department);
