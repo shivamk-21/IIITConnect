@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
     height: "100%",
     width: "95%",
     lineHeight: 80,
-    fontSize: 50,
+    fontSize: 45,
     position: "absolute",
     left: "10%",
     top: "15%",

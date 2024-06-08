@@ -27,7 +27,12 @@ const userCard = ({ onclick }) => {
 
   return (
     <TouchableOpacity style={styles.userCard} onPress={onclick}>
-      <Image source={{ uri: userInfo.photo }} style={styles.displayPicture} />
+      <Image
+        source={{
+          uri: userInfo.photo.substring(0, userInfo.photo.lastIndexOf("=")),
+        }}
+        style={styles.displayPicture}
+      />
       <Text style={[styles.userCardText, { fontSize: fontSize }]}>
         {textContent}
       </Text>

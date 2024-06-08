@@ -2,7 +2,7 @@ import { View, Text, Image } from "react-native";
 import React from "react";
 import styles from "../styles/Theme";
 import { LinearGradient } from "expo-linear-gradient";
-import Slider from "./Slider"
+import Slider from "./Slider";
 const PaperCard = () => {
   return (
     <View style={styles.offlineCardBase}>
@@ -12,8 +12,8 @@ const PaperCard = () => {
         end={{ x: 1, y: 0 }}
         style={styles.offlineCard}
       >
-        <Text style={styles.offlineCardText}>Offline</Text>
-        <Slider/>
+        <Text style={styles.offlineCardText}>Good Luck</Text>
+        <Slider />
       </LinearGradient>
     </View>
   );

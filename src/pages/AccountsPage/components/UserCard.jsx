@@ -27,7 +27,12 @@ const UserCard = () => {
 
   return (
     <View style={styles.userCardBase}>
-      <Image source={{ uri: userInfo.photo }} style={styles.displayPicture} />
+      <Image
+        source={{
+          uri: userInfo.photo.substring(0, userInfo.photo.lastIndexOf("=")),
+        }}
+        style={styles.displayPicture}
+      />
       <Text style={[styles.userCardText, { fontSize: fontSize }]}>
         {textContent}
       </Text>
