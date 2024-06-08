@@ -65,7 +65,6 @@ const styles = StyleSheet.create({
   },
   userStatCardImage: {
     position: "absolute",
-    right: "5%",
     width: "30%",
     height: "100%",
     marginTop: "4%",

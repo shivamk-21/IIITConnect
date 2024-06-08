@@ -18,7 +18,11 @@ const UserStatCard = () => {
         <Text style={styles.userStatCardText2}>Semester {userInfo.semester}</Text>
         <Image
           source={require("../../../assets/boy.png")}
-          style={styles.userStatCardImage}
+          style={{...styles.userStatCardImage,right:"-2%"}}
+        />
+        <Image
+          source={require("../../../assets/girl.png")}
+          style={{...styles.userStatCardImage,right:"15%"}}
         />
       </LinearGradient>
     </View>
