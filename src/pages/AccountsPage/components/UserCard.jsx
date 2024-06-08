@@ -1,19 +1,22 @@
-import React, { useEffect, useState } from 'react';
-import { Text, Image, View, Dimensions } from 'react-native';
-import styles from '../styles/Theme';
+import React, { useEffect, useState } from "react";
+import { Text, Image, View, Dimensions } from "react-native";
+import styles from "../styles/Theme";
+import { useConText } from "../../../context/Context";
 
 const UserCard = () => {
   const [fontSize, setFontSize] = useState(30);
-  const textContent = 'Hello Shivam!';
+  const { userInfo } = useConText();
+  const textContent = "Hello" + userInfo.name + "!";
 
   useEffect(() => {
-    const { width: containerWidth, height: containerHeight } = Dimensions.get('window');
-    const maxWidth = 0.75 * containerWidth; 
-    const maxHeight = 0.1 * containerHeight; 
+    const { width: containerWidth, height: containerHeight } =
+      Dimensions.get("window");
+    const maxWidth = 0.75 * containerWidth;
+    const maxHeight = 0.1 * containerHeight;
 
     let currentFontSize = 30;
-    let textWidth = currentFontSize * textContent.length * 0.6; 
-    
+    let textWidth = currentFontSize * textContent.length * 0.6;
+
     while (textWidth > maxWidth || currentFontSize * 1.2 > maxHeight) {
       currentFontSize -= 1;
       textWidth = currentFontSize * textContent.length * 0.6;
@@ -24,7 +27,7 @@ const UserCard = () => {
 
   return (
     <View style={styles.userCardBase}>
-      <Image source={require('../../../devAssets/dp.jpg')} style={styles.displayPicture} />
+      <Image source={{ uri: userInfo.photo }} style={styles.displayPicture} />
       <Text style={[styles.userCardText, { fontSize: fontSize }]}>
         {textContent}
       </Text>

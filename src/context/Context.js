@@ -2,7 +2,8 @@ import React, { createContext, useState, useEffect, useContext } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 const CentralData = createContext();
-import ENV_VAR from "../../env"
+import ENV_VAR from "../../Var";
+import { Alert } from "react-native";
 
 const Provider = ({ children }) => {
   const [subject, setSubject] = useState([]);
@@ -14,15 +15,14 @@ const Provider = ({ children }) => {
   const [tabBarVisible, setTabBarVisible] = useState(true);
   const [logStatus, setLogStatus] = useState(false);
   const [accessedPapers, setAccessedPapers] = useState(0);
+  const [userInfo, setUserInfo] = useState({});
 
   const toggleTabBar = (state) => {
     setTabBarVisible(state);
   };
   const fetchQuote = async () => {
     try {
-      const response = await axios.get(
-        ENV_VAR.QUOTE_LINK
-      );
+      const response = await axios.get(ENV_VAR.QUOTE_LINK);
       setQuoteData({
         quote: response.data.quote,
         author: response.data.author,
@@ -230,6 +230,67 @@ const Provider = ({ children }) => {
     setAccessedPapers(accessedPapers + 1);
   };
 
+  const setUserInfoData = (data) => {
+    if (data.email.includes("iiitnr.edu.in")) {
+      var branch = "";
+      const branchCode = parseInt(data.email.slice(-17, -14));
+      if (branchCode === 100) {
+        branch = "CSE";
+      } else if (branchCode === 101) {
+        branch = "ECE";
+      } else if (branchCode === 102) {
+        branch = "DSAI";
+      }
+
+      const joinYear = parseInt(data.email.slice(-19, -17));
+      var semester = new Date().getFullYear() - 2000 - joinYear;
+      semester=semester*2
+      if (new Date().getMonth() >= 8) {
+        semester++;
+      }
+
+      setUserInfo({
+        emial: data.email,
+        name: data.givenName,
+        photo: data.photo,
+        branch: branch,
+        semester: semester,
+      });
+      setLogStatus(true);
+      return "";
+    } else {
+      return "wrong_email";
+    }
+  };
+
+  const logout = () => {
+    setUserInfo({});
+    setLogStatus(false);
+  };
+
+  const saveLoginData = async () => {
+    try {
+      await AsyncStorage.setItem("userInfo", JSON.stringify(userInfo));
+    } catch (error) {}
+  };
+
+  const loadLoginData = async () => {
+    try {
+      const savedUserInfo = await AsyncStorage.getItem("userInfo");
+      if (savedUserInfo) {
+        setUserInfo(JSON.parse(savedUserInfo));
+      }
+    } catch (error) {}
+  };
+
+  useEffect(() => {
+    loadLoginData();
+  }, []);
+
+  useEffect(() => {
+    saveLoginData();
+  }, [userInfo]);
+
   valuesToShare = {
     quoteData,
     loading,
@@ -237,8 +298,10 @@ const Provider = ({ children }) => {
     subject,
     logStatus,
     accessedPapers,
+    userInfo,
+    setUserInfoData,
     increaseAccessedPapers,
-    setLogStatus,
+    logout,
     toggleTabBar,
     addSubject,
     removeSubject,

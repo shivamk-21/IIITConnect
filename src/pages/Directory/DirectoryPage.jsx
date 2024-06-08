@@ -9,7 +9,7 @@ import React, { useState } from "react";
 import styles from "./styles/Theme";
 import ContactList from "./components/ContactList";
 import { Dropdown } from "react-native-element-dropdown";
-import ENV_VAR from "../../../env"
+import ENV_VAR from "../../../Var"
 
 const QBankPage = () => {
   const [Name, setName] = useState("");

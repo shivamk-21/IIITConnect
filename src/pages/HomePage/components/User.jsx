@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Text, Image, Dimensions, TouchableOpacity } from "react-native";
 import styles from "../styles/GlobalLight";
+import { useConText } from "../../../context/Context";
 
 const userCard = ({ onclick }) => {
   const [fontSize, setFontSize] = useState(30);
-  const textContent = "Hello Shivam!";
+  const { userInfo } = useConText();
+  const textContent = "Hello" + userInfo.name + "!";
 
   useEffect(() => {
     const { width: containerWidth, height: containerHeight } =
@@ -25,10 +27,7 @@ const userCard = ({ onclick }) => {
 
   return (
     <TouchableOpacity style={styles.userCard} onPress={onclick}>
-      <Image
-        source={require("../../../devAssets/dp.jpg")}
-        style={styles.displayPicture}
-      />
+      <Image source={{ uri: userInfo.photo }} style={styles.displayPicture} />
       <Text style={[styles.userCardText, { fontSize: fontSize }]}>
         {textContent}
       </Text>

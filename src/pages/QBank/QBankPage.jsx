@@ -11,7 +11,7 @@ import styles from "./styles/Theme";
 import PaperList from "./components/PaperList";
 import { useConText } from "../../context/Context";
 import PopUp from "./components/PopUp";
-import ENV_VAR from "../../../env";
+import ENV_VAR from "../../../Var";
 
 const QBankPage = () => {
   const [subjectName, setSubjectName] = useState("");

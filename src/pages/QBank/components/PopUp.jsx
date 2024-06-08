@@ -15,7 +15,7 @@ import * as DocumentPicker from "expo-document-picker";
 import axios from "axios";
 import * as FileSystem from "expo-file-system";
 import JSZip from "jszip";
-import ENV_VAR from "../../../../env";
+import ENV_VAR from "../../../../Var";
 
 const PopUp = ({ handleClose }) => {
   const [subjectName, setSubjectName] = useState("");

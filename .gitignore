@@ -17,4 +17,5 @@ web-build/
 .metro-health-check*
 
 eas.json
-env.js
+Var.js
+android
