@@ -279,6 +279,7 @@ const Provider = ({ children }) => {
       const savedUserInfo = await AsyncStorage.getItem("userInfo");
       if (savedUserInfo) {
         setUserInfo(JSON.parse(savedUserInfo));
+        setLogStatus(true);
       }
     } catch (error) {}
   };
