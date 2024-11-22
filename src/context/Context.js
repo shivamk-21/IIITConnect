@@ -231,6 +231,7 @@ const Provider = ({ children }) => {
   };
 
   const setUserInfoData = (data) => {
+    //Different Logic Used in Production
     if (data.email.includes("iiitnr.edu.in")) {
       var branch = "";
       const branchCode = parseInt(data.email.slice(-17, -14));
