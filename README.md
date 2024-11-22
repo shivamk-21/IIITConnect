@@ -35,7 +35,7 @@
 #### Contacts Directory:
 - The app allows users to access relevant contacts using various filters, including contacts for the college and related utilities.
 
-<img src="https://github.com/user-attachments/assets/c0e01071-7a15-400a-8cc1-e4075ebbfbe5" alt="Directory" height="400">
+<img src="https://github.com/user-attachments/assets/965d67d3-0329-4156-a69c-b7eef5414661" alt="Directory" height="400">
 
 ---
 
@@ -48,6 +48,7 @@
 [IIIT Connect Prototype on Figma](https://www.figma.com/proto/SYFyIZnx4OkWePOZefbCQA/IIIT-Connect?node-id=39-31&node-type=frame&t=Xui6o1zeqdP0lKF0-1&scaling=scale-down&content-scaling=fixed&page-id=2%3A478&starting-point-node-id=39%3A31&show-proto-sidebar=1)
 
 ---
+
 
 ### 4. How to Run the Project
 
