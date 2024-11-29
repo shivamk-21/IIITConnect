@@ -58,4 +58,6 @@ To run the project locally, follow these steps:
    ```bash
    git clone [repository_link]
    npm i
-   npx expo start 
+   npx expo start
+   
+[![Hits](https://hits.sh/github.com/shivamk-21/IIITConnect.svg?label=Views)](https://hits.sh/github.com/shivamk-21/IIITConnect/)
